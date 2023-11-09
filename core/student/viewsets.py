@@ -1,15 +1,23 @@
 from student.models import *
 from student.serializers import *
+from student.filters import *
 from rest_framework import viewsets, filters
 from rest_framework.views import Response
 from rest_framework.status import HTTP_201_CREATED
 from rest_framework.permissions import AllowAny
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class StudentViewSet(viewsets.ModelViewSet):
     http_method_names = ("get", "post")
     permission_classes = (AllowAny,)
     serializer_class = StudentSerializer
+
+    filter_backends=[SearchFilter, OrderingFilter,DjangoFilterBackend]
+    search_fields = ['first_name','last_name']
+    ordering_fields = ['first_name','last_name','spiritual_title','entry_date','leave_date']
+    filterset_class = StudentFilter    
 
     def get_queryset(self):
         return Student.objects.all()
