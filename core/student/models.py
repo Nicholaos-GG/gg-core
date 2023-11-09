@@ -29,7 +29,7 @@ class Student(models.Model):
     email = models.EmailField(null=True)
     entry_date = models.DateField(null=True)
     leave_date = models.DateField(null=True)
-    spiritual_title = models.CharField(max_length=255)
+    spiritual_title = models.CharField(max_length=255, null=True)
     objects = StudentManager()
 
     def __str__(self):
