@@ -1,8 +1,10 @@
 import uuid
 from django.db import models
-from django.http import Http404
-from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import AbstractUser
+
+
+class User(AbstractUser):
+    email = models.EmailField(unique=True)
 
 
 class Student(models.Model):
@@ -25,7 +27,7 @@ class Student(models.Model):
     department = models.CharField(max_length=255)
     sex = models.CharField(choices=[("F", "Female"), ("M", "Male")], max_length=1)
     phone_number = models.CharField(max_length=10)
-    email = models.EmailField(null=True)
+    email = models.EmailField(unique=True)
     entry_date = models.DateField(null=True)
     leave_date = models.DateField(null=True)
     spiritual_title = models.CharField(
