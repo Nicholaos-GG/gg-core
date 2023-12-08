@@ -24,8 +24,8 @@ class Student(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     photo = models.ImageField()
-    department = models.CharField(max_length=255)
-    sex = models.CharField(choices=[("F", "Female"), ("M", "Male")], max_length=1)
+    department = models.CharField(max_length=255, choices=DEPARTMENT_CHOICES)
+    sex = models.CharField(choices=[("M", "Male"), ("F", "Female")], max_length=1)
     phone_number = models.CharField(max_length=10)
     email = models.EmailField(unique=True)
     entry_date = models.DateField(null=True)
@@ -35,4 +35,6 @@ class Student(models.Model):
     )
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        if self.spiritual_title is None:
+            return f"{self.first_name} {self.last_name}"
+        return f"{self.spiritual_title} {self.first_name} {self.last_name}"

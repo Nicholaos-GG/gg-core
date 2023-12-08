@@ -1,5 +1,27 @@
 services:
   api:
-    build: ./
+    build: ./core
+    command: ./wait-for-it.sh mysql:3306 -- ./core/docker-entrypoint.sh
     ports:
       - 2000:8000
+    depends_on:
+      - mysql
+    restart: on-failure
+    volumes:
+      - ./core:/app
+  mysql:
+    image: mysql:8.0
+    env_file:
+      - ./.env
+    ports:
+      - 4407:3306
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - mysqldata:/var/lib/mysql   
+volumes:
+  mysqldata:
