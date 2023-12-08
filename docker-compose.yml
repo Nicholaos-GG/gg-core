@@ -1,27 +1,22 @@
+version: "3.8"
 services:
-  api:
+  app:
     build: ./core
-    command: ./wait-for-it.sh mysql:3306 -- ./core/docker-entrypoint.sh
+    volumes:
+      - .:/app
     ports:
-      - 2000:8000
+      - 8000:8000
+    image: app:app
+    container_name: gg_core
+    command: python manage.py runserver 0.0.0.0:8000
     depends_on:
-      - mysql
-    restart: on-failure
+      - db
+  db:
+    image: postgres
     volumes:
-      - ./core:/app
-  mysql:
-    image: mysql:8.0
-    env_file:
-      - ./.env
-    ports:
-      - 4407:3306
-    restart: always
+      - ./data/db:/var/lib/postgresql/data
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-    volumes:
-      - mysqldata:/var/lib/mysql   
-volumes:
-  mysqldata:
+      - POSTGRES_DB=core
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=55969362
+    container_name: postgres_db

@@ -16,6 +16,7 @@ django-filter = "^23.3"
 python-dotenv = "^1.0.0"
 djoser = "^2.2.2"
 mysqlclient = "^2.2.0"
+psycopg2-binary = "^2.9.9"
 
 [build-system]
 requires = ["poetry-core"]

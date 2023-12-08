@@ -3,8 +3,6 @@ from .models import *
 
 
 class StudentSerializer(serializers.ModelSerializer):
-    id = serializers.UUIDField(source="public_id", read_only=True, format="hex")
-
     class Meta:
         model = Student
         fields = [

@@ -13,7 +13,6 @@ class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     permission_classes = (DjangoModelPermissions,)
     serializer_class = StudentSerializer
-    lookup_field = "public_id"
     filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
     search_fields = ["first_name", "last_name"]
     ordering_fields = [

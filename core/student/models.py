@@ -1,4 +1,3 @@
-import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -15,12 +14,6 @@ class Student(models.Model):
         ("CE", "Chemical Engineering"),
     ]
     SPIRITUAL_TITLE_CHOICES = [("Dn", "Deacon"), ("Kes", "Kesis")]
-    public_id = models.UUIDField(
-        editable=False,
-        default=uuid.uuid4,
-        db_index=True,
-        unique=True,
-    )
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     photo = models.ImageField()
