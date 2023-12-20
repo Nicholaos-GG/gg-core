@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django_filters",
     "drf_yasg",
     "student.apps.StudentConfig",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -53,8 +54,12 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 ROOT_URLCONF = "core.urls"
 
 TEMPLATES = [
@@ -72,6 +77,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = "core.wsgi.application"
 
@@ -144,6 +150,8 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10,
 }
 
 AUTH_USER_MODEL = "student.User"

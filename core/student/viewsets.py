@@ -10,9 +10,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 class StudentViewSet(viewsets.ModelViewSet):
     http_method_names = ("get", "post", "patch", "delete")
-    queryset = Student.objects.all()
+    queryset = Student.objects.all()  # defer("photo", "entry_date", "leave_date")
     permission_classes = (DjangoModelPermissions,)
-    serializer_class = StudentSerializer
     filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
     search_fields = ["first_name", "last_name"]
     ordering_fields = [
@@ -23,6 +22,13 @@ class StudentViewSet(viewsets.ModelViewSet):
         "leave_date",
     ]
     filterset_class = StudentFilter
+
+    def get_serializer_class(self):
+        if self.action in ["list"]:
+            return StudentListSerializer
+        elif self.action in ["retrieve", "create"]:
+            return StudentDetailSerializer
+        return StudentListSerializer
 
     def get_serializer_context(self):
         return {"request": self.request}

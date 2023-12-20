@@ -16,7 +16,7 @@ class Student(models.Model):
     SPIRITUAL_TITLE_CHOICES = [("Dn", "Deacon"), ("Kes", "Kesis")]
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    photo = models.ImageField()
+    photo = models.ImageField(null=True)
     department = models.CharField(max_length=255, choices=DEPARTMENT_CHOICES)
     sex = models.CharField(choices=[("M", "Male"), ("F", "Female")], max_length=1)
     phone_number = models.CharField(max_length=10)
